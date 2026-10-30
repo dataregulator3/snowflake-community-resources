@@ -1,0 +1,32 @@
+name: "SnowPro Core quiz: wrong or unclear answer"
+description: Report a quiz question whose answer key or explanation is wrong
+title: "[SnowPro Core quiz] "
+labels: ["snowpro-core-quiz"]
+body:
+  - type: input
+    id: test
+    attributes:
+      label: Test
+      description: The test name shown on the card, e.g. "Scenario · Domain 3" or "Mock Exam 2"
+    validations:
+      required: true
+  - type: textarea
+    id: question
+    attributes:
+      label: Question text
+      description: Copy the question (and the code snippet, if any)
+    validations:
+      required: true
+  - type: textarea
+    id: correction
+    attributes:
+      label: What should be correct, and why
+    validations:
+      required: true
+  - type: input
+    id: source
+    attributes:
+      label: Snowflake documentation link
+      placeholder: https://docs.snowflake.com/...
+    validations:
+      required: true

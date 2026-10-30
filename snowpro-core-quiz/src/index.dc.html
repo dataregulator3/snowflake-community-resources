@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/broadsheet-51da8aa2-7ee6-4207-bb16-23db316dbf95/styles.css">
+<script src="_ds/broadsheet-51da8aa2-7ee6-4207-bb16-23db316dbf95/_ds_bundle.js"></script>
+<script src="data/practice.js"></script>
+<script src="data/domain.js"></script>
+<script src="data/scenario-d1.js"></script>
+<script src="data/scenario-d2.js"></script>
+<script src="data/scenario-d3.js"></script>
+<script src="data/scenario-d4.js"></script>
+<script src="data/scenario-d5.js"></script>
+<script src="data/scenario-d6.js"></script>
+<script src="data/facts.js"></script>
+<script src="data/numbers-test.js"></script>
+<script src="data/mock-exam.js"></script>
+<script src="data/mock-exam-2.js"></script>
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body { background: var(--color-bg); color: var(--color-text); font-family: var(--font-body); -webkit-font-smoothing: antialiased; }
+  a { color: var(--color-accent-700); text-decoration: underline; text-underline-offset: 2px; }
+  a:hover { color: var(--color-accent); }
+</style>
+</helmet>
+<template id="__bundler_thumbnail"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="#0088b0"/><text x="50" y="64" font-family="Georgia, serif" font-size="48" font-weight="700" fill="#f3f2f2" text-anchor="middle">Q</text></svg></template>
+<div style="min-height:100vh;background:var(--color-bg);">
+  <div style="max-width:840px;margin:0 auto;padding:40px 24px 80px;">
+
+    <div style="display:flex;align-items:baseline;gap:14px;border-bottom:2px solid var(--color-text);padding-bottom:12px;margin-bottom:6px;">
+      <div style="font-family:var(--font-heading);font-weight:600;font-size:26px;letter-spacing:-0.01em;">Snowflake Practice Test</div>
+      <div style="margin-left:auto;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--color-neutral-600);">Certification Practice</div>
+    </div>
+    <div style="font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-neutral-600);border-bottom:1px solid var(--color-divider);padding-bottom:14px;margin-bottom:32px;">{{ quizCount }} Quizzes · Pass mark {{ threshold }}%</div>
+
+    <!-- ============ HOME ============ -->
+    <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+    <div>
+      <h1 style="font-family:var(--font-heading);font-weight:600;font-size:34px;line-height:1.15;margin:0 0 12px;max-width:22ch;text-wrap:balance;">Choose a quiz to get started</h1>
+      <p style="font-size:17px;line-height:1.55;color:var(--color-neutral-800);margin:0 0 36px;max-width:60ch;">Click through each quiz. At the end you get your score and a review. Answer at least {{ threshold }}% correctly to <em>pass</em>.</p>
+
+      <div style="display:flex;flex-direction:column;gap:44px;">
+        <sc-for list="{{ groups }}" as="g" hint-placeholder-count="2">
+          <div>
+            <div style="font-family:var(--font-heading);font-weight:600;font-size:13px;letter-spacing:0.1em;text-transform:uppercase;color:var(--color-neutral-700);border-bottom:1px solid var(--color-divider);padding-bottom:10px;margin-bottom:20px;">{{ g.label }}</div>
+            <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,320px),1fr));gap:18px;">
+              <sc-for list="{{ g.quizzes }}" as="q" hint-placeholder-count="5">
+                <div style="display:flex;flex-direction:column;gap:14px;padding:22px 22px 20px;background:var(--color-surface);border-radius:var(--radius-md);box-shadow:var(--shadow-sm);">
+                  <div style="display:flex;align-items:center;gap:10px;">
+                    <span style="font-family:var(--font-heading);font-weight:600;font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:var(--color-accent-700);">{{ q.kicker }}</span>
+                    <sc-if value="{{ q.hasResult }}" hint-placeholder-val="{{ false }}">
+                      <button type="button" onClick="{{ q.onReview }}" title="View review" style="{{ q.resultStyle }}">{{ q.resultLabel }}
+                        <svg width="12" height="12" viewBox="0 0 256 256" fill="currentColor" style="margin-left:5px;"><path d="M247.31,124.76c-.35-.79-8.82-19.58-27.65-38.41C194.57,61.26,162.88,48,128,48S61.43,61.26,36.34,86.35C17.51,105.18,9,124,8.69,124.76a8,8,0,0,0,0,6.5c.35.79,8.82,19.57,27.65,38.4C61.43,194.74,93.12,208,128,208s66.57-13.26,91.66-38.34c18.83-18.83,27.3-37.61,27.65-38.4A8,8,0,0,0,247.31,124.76ZM128,168a40,40,0,1,1,40-40A40,40,0,0,1,128,168Z"></path></svg>
+                      </button>
+                    </sc-if>
+                  </div>
+                  <div style="font-family:var(--font-heading);font-weight:600;font-size:22px;line-height:1.2;">{{ q.title }}</div>
+                  <div style="font-size:14px;line-height:1.5;color:var(--color-neutral-700);flex:1;">{{ q.topic }}</div>
+                  <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:4px;">
+                    <span style="font-size:13px;color:var(--color-neutral-600);">{{ q.countLabel }}</span>
+                    <button type="button" class="btn btn-primary" onClick="{{ q.onStart }}">{{ q.startLabel }}
+                      <svg width="14" height="14" viewBox="0 0 256 256" fill="currentColor"><path d="M221.66,133.66l-72,72A8,8,0,0,1,136,200V144H40a8,8,0,0,1,0-16h96V72a8,8,0,0,1,13.66-5.66l72,72A8,8,0,0,1,221.66,133.66Z"></path></svg>
+                    </button>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+    </sc-if>
+
+    <!-- ============ QUIZ ============ -->
+    <sc-if value="{{ isQuiz }}" hint-placeholder-val="{{ false }}">
+    <div>
+      <div style="display:flex;align-items:baseline;justify-content:space-between;gap:16px;margin-bottom:10px;">
+        <div style="font-family:var(--font-heading);font-weight:600;font-size:13px;letter-spacing:0.1em;text-transform:uppercase;color:var(--color-accent-700);">{{ quizTitle }}</div>
+        <div style="font-size:13px;color:var(--color-neutral-600);letter-spacing:0.04em;">{{ counterLabel }}</div>
+      </div>
+      <div style="height:4px;background:var(--color-neutral-200);border-radius:2px;overflow:hidden;margin-bottom:34px;">
+        <div style="height:100%;background:var(--color-accent);border-radius:2px;transition:width .3s ease;width:{{ progressPct }};"></div>
+      </div>
+
+      <div style="font-family:var(--font-heading);font-weight:600;font-size:24px;line-height:1.35;margin:0 0 18px;white-space:pre-line;text-wrap:pretty;">{{ qText }}</div>
+
+      <sc-if value="{{ hasCode }}" hint-placeholder-val="{{ false }}">
+        <pre style="font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:14px;background:var(--color-neutral-100);border:1px solid var(--color-divider);border-radius:var(--radius-md);padding:14px 16px;white-space:pre-wrap;line-height:1.5;overflow-x:auto;margin:0 0 22px;">{{ qCode }}</pre>
+      </sc-if>
+
+      <sc-if value="{{ hasHint }}" hint-placeholder-val="{{ false }}">
+        <div style="display:inline-flex;align-items:center;font-size:12px;letter-spacing:0.03em;padding:4px 12px;border-radius:2px;background:var(--color-accent-100);color:var(--color-accent-800);margin-bottom:22px;">{{ hintText }}</div>
+      </sc-if>
+
+      <!-- choice questions -->
+      <sc-if value="{{ isChoice }}" hint-placeholder-val="{{ true }}">
+        <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:36px;">
+          <sc-for list="{{ options }}" as="opt" hint-placeholder-count="4">
+            <button type="button" onClick="{{ opt.onClick }}" style="{{ opt.style }}">
+              <span style="{{ opt.badgeStyle }}">{{ opt.letter }}</span>
+              <span style="flex:1;min-width:0;overflow-wrap:anywhere;padding-top:3px;">{{ opt.text }}</span>
+            </button>
+          </sc-for>
+        </div>
+      </sc-if>
+
+      <!-- match questions -->
+      <sc-if value="{{ isMatch }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;flex-direction:column;gap:14px;margin-bottom:36px;">
+          <sc-for list="{{ matchRows }}" as="row" hint-placeholder-count="4">
+            <div style="display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;gap:10px 14px;background:var(--color-surface);border-radius:var(--radius-md);padding:14px 18px;">
+              <span style="font-size:16px;font-family:var(--font-heading);font-weight:600;">{{ row.left }}</span>
+              <span style="color:var(--color-accent);font-size:18px;">→</span>
+              <select class="input" value="{{ row.value }}" onChange="{{ row.onChange }}" disabled="{{ row.disabled }}" style="font-family:var(--font-body);font-size:15px;">
+                <option value="">— select —</option>
+                <sc-for list="{{ row.options }}" as="o" hint-placeholder-count="4">
+                  <option value="{{ o.v }}">{{ o.label }}</option>
+                </sc-for>
+              </select>
+            </div>
+          </sc-for>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ revealed }}" hint-placeholder-val="{{ false }}">
+        <div style="{{ feedbackCardStyle }}">
+          <span style="{{ feedbackStyle }}">{{ feedbackLabel }}</span>
+          <sc-if value="{{ showCorrectAnswer }}" hint-placeholder-val="{{ false }}">
+            <div style="font-size:15px;line-height:1.5;white-space:pre-line;overflow-wrap:anywhere;"><span style="color:var(--color-neutral-600);">Correct answer: </span><span style="color:var(--color-accent-700);">{{ correctAnswerText }}</span></div>
+          </sc-if>
+          <sc-if value="{{ hasExplanation }}" hint-placeholder-val="{{ false }}">
+            <div style="font-size:14px;line-height:1.55;color:var(--color-neutral-700);">{{ explanationText }}</div>
+          </sc-if>
+        </div>
+      </sc-if>
+
+      <div style="display:flex;align-items:center;gap:12px;border-top:1px solid var(--color-divider);padding-top:22px;">        <button type="button" class="btn btn-ghost" onClick="{{ onHome }}">Cancel</button>
+        <div style="margin-left:auto;display:flex;gap:10px;">
+          <button type="button" class="btn btn-secondary" onClick="{{ onPrev }}" disabled="{{ prevDisabled }}">Back</button>
+          <button type="button" class="btn btn-primary" onClick="{{ onNext }}" disabled="{{ nextDisabled }}">{{ nextLabel }}</button>
+        </div>
+      </div>
+    </div>
+    </sc-if>
+
+    <!-- ============ RESULTS ============ -->
+    <sc-if value="{{ isResults }}" hint-placeholder-val="{{ false }}">
+    <div>
+      <div style="font-family:var(--font-heading);font-weight:600;font-size:13px;letter-spacing:0.1em;text-transform:uppercase;color:var(--color-accent-700);margin-bottom:14px;">{{ quizTitle }}</div>
+
+      <div style="display:flex;align-items:center;gap:28px;flex-wrap:wrap;padding:28px 0 30px;border-bottom:1px solid var(--color-divider);margin-bottom:36px;">
+        <div style="font-family:var(--font-heading);font-weight:600;font-size:76px;line-height:0.9;letter-spacing:-0.02em;color:{{ pctColor }};">{{ pctLabel }}</div>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <span style="{{ passStyle }}">{{ passLabel }}</span>
+          <div style="font-size:18px;color:var(--color-neutral-800);">{{ scoreText }}</div>
+          <div style="width:220px;height:6px;background:var(--color-neutral-200);border-radius:3px;overflow:hidden;">
+            <div style="height:100%;border-radius:3px;background:{{ pctColor }};width:{{ pctLabel }};"></div>
+          </div>
+        </div>
+      </div>
+
+      <div style="font-family:var(--font-heading);font-weight:600;font-size:20px;margin:0 0 18px;">Review</div>
+      <div style="display:flex;flex-direction:column;gap:16px;margin-bottom:40px;">
+        <sc-for list="{{ reviewItems }}" as="r" hint-placeholder-count="5">
+          <div style="{{ r.cardStyle }}">
+            <div style="display:flex;align-items:baseline;gap:12px;margin-bottom:10px;">
+              <span style="font-family:var(--font-heading);font-weight:600;font-size:13px;color:var(--color-neutral-600);">Question {{ r.num }}</span>
+              <span style="{{ r.tagStyle }}">{{ r.tagLabel }}</span>
+            </div>
+            <div style="font-size:16px;line-height:1.45;font-family:var(--font-heading);font-weight:600;margin-bottom:12px;white-space:pre-line;">{{ r.qtext }}</div>
+            <div style="display:flex;flex-direction:column;gap:8px;font-size:14px;line-height:1.5;">
+              <div style="display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px;">
+                <span style="color:var(--color-neutral-600);">Your answer: </span>
+                <sc-for list="{{ r.yourItems }}" as="it" hint-placeholder-count="2">
+                  <span style="{{ it.style }}">{{ it.text }}</span>
+                </sc-for>
+              </div>
+              <div style="display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px;">
+                <span style="color:var(--color-neutral-600);">Correct answer: </span>
+                <sc-for list="{{ r.correctItems }}" as="it" hint-placeholder-count="2">
+                  <span style="color:var(--color-accent-700);">{{ it.text }}</span>
+                </sc-for>
+              </div>
+            </div>
+            <div style="font-size:13px;line-height:1.55;color:var(--color-neutral-700);margin-top:12px;padding-top:12px;border-top:1px solid var(--color-divider);">{{ r.explanation }}</div>
+          </div>
+        </sc-for>
+      </div>
+
+      <div style="display:flex;gap:12px;border-top:1px solid var(--color-divider);padding-top:24px;">
+        <button type="button" class="btn btn-primary" onClick="{{ onRetry }}">
+          <svg width="14" height="14" viewBox="0 0 256 256" fill="currentColor"><path d="M240,56v48a8,8,0,0,1-8,8H184a8,8,0,0,1,0-16H211.4L184.81,71.64l-.25-.24a80,80,0,1,0-1.67,114.78,8,8,0,0,1,11,11.63A96,96,0,1,1,195.75,60L224,85.8V56a8,8,0,0,1,16,0Z"></path></svg>
+          Retry quiz</button>
+        <button type="button" class="btn btn-secondary" onClick="{{ onHome }}">Back to overview</button>
+      </div>
+    </div>
+    </sc-if>
+
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;passThreshold&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:75,&quot;min&quot;:50,&quot;max&quot;:100,&quot;step&quot;:5,&quot;unit&quot;:&quot;%&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Behavior&quot;},&quot;shuffleQuestions&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Behavior&quot;},&quot;shuffleAnswers&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Behavior&quot;}}">
+class Component extends DCLogic {
+  get quizzes() { return (window.QUIZZES || []).slice().sort((a, b) => (a.order || 0) - (b.order || 0)); }
+
+
+  state = { screen:"home", qi:0, ci:0, answers:{}, work:[], results:{}, score:null, revealed:false };
+
+  componentDidMount() {
+    try {
+      const raw = localStorage.getItem("sf_quiz_results_v1");
+      if (raw) this.setState({ results: JSON.parse(raw) });
+    } catch(e) {}
+    this._waitForQuizzes(0, 0);
+  }
+
+  _waitForQuizzes(tries, stable) {
+    const n = (window.QUIZZES || []).length;
+    if (n !== this._lastCount) { this._lastCount = n; stable = 0; this.forceUpdate(); } else stable++;
+    if (n > 0 && stable >= 5) { this._migrateResults(); return; }
+    if (tries < 100) setTimeout(() => this._waitForQuizzes(tries + 1, stable), 100);
+  }
+
+  _migrateResults() {
+    const r = this.state.results || {};
+    const list = this.quizzes;
+    const out = {};
+    let changed = false;
+    Object.keys(r).forEach(k => {
+      if (/^\d+$/.test(k) && list[+k]) { out[list[+k].id] = r[k]; changed = true; }
+      else out[k] = r[k];
+    });
+    if (!changed) return;
+    try { localStorage.setItem("sf_quiz_results_v1", JSON.stringify(out)); } catch(e) {}
+    this.setState({ results: out });
+  }
+
+  threshold() { return this.props.passThreshold ?? 75; }
+  shuffle(a) { const r = a.slice(); for (let i=r.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [r[i],r[j]]=[r[j],r[i]]; } return r; }
+
+  startQuiz(qi) {
+    const src = this.quizzes[qi];
+    let qs = JSON.parse(JSON.stringify(src.questions));
+    if (this.props.shuffleQuestions) qs = this.shuffle(qs);
+    qs.forEach(q => {
+      if (q.kind === "match") {
+        const rs = q.leftItems.map(p => p.r);
+        q.rightOptions = this.props.shuffleAnswers ? this.shuffle(rs) : rs;
+        if (this.props.shuffleAnswers) q.leftItems = this.shuffle(q.leftItems);
+      } else if (this.props.shuffleAnswers) {
+        q.options = this.shuffle(q.options);
+      }
+    });
+    this.setState({ screen:"quiz", qi, ci:0, answers:{}, work:qs, revealed:false });
+  }
+
+  selectSingle(ci, idx) { this.setState(s => ({ answers: { ...s.answers, [ci]: idx } })); }
+  toggleMulti(ci, idx) {
+    this.setState(s => {
+      const cur = (s.answers[ci] || []).slice();
+      const p = cur.indexOf(idx);
+      if (p >= 0) cur.splice(p,1); else cur.push(idx);
+      return { answers: { ...s.answers, [ci]: cur } };
+    });
+  }
+  setMatch(ci, li, val) {
+    this.setState(s => ({ answers: { ...s.answers, [ci]: { ...(s.answers[ci]||{}), [li]: val } } }));
+  }
+
+  canProceed() {
+    const q = this.state.work[this.state.ci];
+    const a = this.state.answers[this.state.ci];
+    if (!q) return false;
+    if (q.kind === "single") return a !== undefined && a !== null;
+    if (q.kind === "multi") return Array.isArray(a) && a.length === q.choose;
+    if (q.kind === "match") return q.leftItems.every((_,i) => a && a[i]);
+    return false;
+  }
+
+  isQCorrect(q, a) {
+    if (q.kind === "single") return a !== undefined && q.options[a] && q.options[a].c;
+    if (q.kind === "multi") { const arr = a || []; return q.options.every((o,i) => arr.includes(i) === !!o.c); }
+    if (q.kind === "match") return q.leftItems.every((li,i) => a && a[i] === li.r);
+    return false;
+  }
+
+  next() {
+    const { ci, work, revealed } = this.state;
+    if (!revealed) { this.setState({ revealed: true }); return; }
+    if (ci >= work.length - 1) this.finish();
+    else this.setState({ ci: ci + 1, revealed: false });
+  }
+  prev() { if (this.state.ci > 0) this.setState({ ci: this.state.ci - 1, revealed: false }); }
+
+  finish() {
+    const { work, answers, qi } = this.state;
+    let correct = 0;
+    work.forEach((q,i) => { if (this.isQCorrect(q, answers[i])) correct++; });
+    const pct = Math.round(correct / work.length * 100);
+    const passed = pct >= this.threshold();
+    const results = { ...this.state.results, [this.quizzes[qi].id]: { pct, passed, correct, total: work.length, work, answers } };
+    try { localStorage.setItem("sf_quiz_results_v1", JSON.stringify(results)); } catch(e) {}
+    this.setState({ screen:"results", score: { correct, total: work.length, pct, passed }, results });
+  }
+
+  reviewSaved(qi) {
+    const r = this.state.results[this.quizzes[qi].id];
+    if (!r || !r.work) return;
+    this.setState({ screen:"results", qi, work: r.work, answers: r.answers || {},
+      score: { correct: r.correct, total: r.total, pct: r.pct, passed: r.passed } });
+  }
+
+  goHome() { this.setState({ screen:"home" }); }
+
+  fmtAnswer(q, a) {
+    if (a === undefined || a === null || (Array.isArray(a) && a.length === 0) || (q.kind==="match" && Object.keys(a||{}).length===0))
+      return "— no answer —";
+    if (q.kind === "single") return q.options[a] ? q.options[a].t : "—";
+    if (q.kind === "multi") return (a||[]).map(i => q.options[i] && q.options[i].t).filter(Boolean).join("  ·  ");
+    if (q.kind === "match") return q.leftItems.map((li,i) => li.l + " → " + (a[i] || "?")).join("\n");
+    return "—";
+  }
+  fmtCorrect(q) {
+    if (q.kind === "single" || q.kind === "multi") return q.options.filter(o=>o.c).map(o=>o.t).join("  ·  ");
+    if (q.kind === "match") return q.leftItems.map(li => li.l + " → " + li.r).join("\n");
+    return "";
+  }
+  answerItems(q, a) {
+    // Returns [{text, ok}] for each of the user's picks, ok = whether that pick is correct.
+    const ok = "color:var(--color-accent-700);";
+    const bad = "color:var(--color-accent-2-700);";
+    const none = "color:var(--color-neutral-600);";
+    const empty = [{ text: "— no answer —", style: none }];
+    if (q.kind === "single") {
+      if (a === undefined || a === null) return empty;
+      const o = q.options[a];
+      return [{ text: o ? o.t : "—", style: o && o.c ? ok : bad }];
+    }
+    if (q.kind === "multi") {
+      const arr = a || [];
+      if (!arr.length) return empty;
+      return arr.map(i => ({ text: q.options[i] ? q.options[i].t : "—", style: q.options[i] && q.options[i].c ? ok : bad }));
+    }
+    if (q.kind === "match") {
+      const keys = a ? Object.keys(a) : [];
+      if (!keys.length) return empty;
+      return q.leftItems.map((li, i) => ({ text: li.l + " → " + (a[i] || "?"), style: a && a[i] === li.r ? ok : bad }));
+    }
+    return empty;
+  }
+  correctItems(q) {
+    if (q.kind === "single" || q.kind === "multi") return q.options.filter(o=>o.c).map(o=>({ text: o.t }));
+    if (q.kind === "match") return q.leftItems.map(li => ({ text: li.l + " → " + li.r }));
+    return [];
+  }
+
+  renderVals() {
+    const s = this.state;
+    const th = this.threshold();
+    const base = {
+      threshold: th,
+      quizCount: this.quizzes.length,
+      isHome: s.screen === "home",
+      isQuiz: s.screen === "quiz",
+      isResults: s.screen === "results",
+    };
+
+    if (s.screen === "home") {
+      const cards = this.quizzes.map((q, i) => {
+        const res = s.results[q.id];
+        const passed = res && res.passed;
+        return {
+          group: q.group,
+          num: i + 1,
+          kicker: q.kicker || ("Quiz " + (i + 1)),
+          title: q.title,
+          topic: q.topic,
+          countLabel: q.questions.length + " questions",
+          startLabel: res ? "Restart" : "Start",
+          hasResult: !!res,
+          resultLabel: res ? (passed ? "Passed · " + res.pct + "%" : "Failed · " + res.pct + "%") : "",
+          resultStyle: "display:inline-flex;align-items:center;font-family:var(--font-body);font-size:11px;letter-spacing:0.02em;padding:3px 10px;border-radius:2px;border:none;cursor:pointer;" +
+            (passed ? "background:var(--color-accent-100);color:var(--color-accent-800);" : "background:var(--color-accent-2-100);color:var(--color-accent-2-800);"),
+          onReview: () => this.reviewSaved(i),
+          onStart: () => this.startQuiz(i),
+        };
+      });
+      const order = [];
+      const byGroup = {};
+      cards.forEach(c => { if (!byGroup[c.group]) { byGroup[c.group] = []; order.push(c.group); } byGroup[c.group].push(c); });
+      base.groups = order.map(g => ({ label: g, quizzes: byGroup[g] }));
+      return base;
+    }
+
+    if (s.screen === "quiz") {
+      const q = s.work[s.ci];
+      const quiz = this.quizzes[s.qi];
+      base.quizTitle = quiz.kicker + " · " + quiz.title;
+      base.counterLabel = "Question " + (s.ci + 1) + " / " + s.work.length;
+      base.progressPct = Math.round((s.ci) / s.work.length * 100) + "%";
+      base.qText = q.text;
+      base.hasCode = !!q.code;
+      base.qCode = q.code || "";
+      base.isChoice = q.kind === "single" || q.kind === "multi";
+      base.isMatch = q.kind === "match";
+      base.hasHint = q.kind === "multi" || q.kind === "match";
+      base.hintText = q.kind === "multi" ? ("Choose exactly " + q.choose + " answers")
+                    : q.kind === "match" ? "Match each item with the correct option" : "";
+
+      const rowBase = "display:flex;gap:14px;align-items:flex-start;width:100%;text-align:left;padding:16px 18px;border-radius:var(--radius-md);cursor:pointer;font-family:var(--font-body);font-size:16px;line-height:1.45;color:var(--color-text);transition:border-color .12s,box-shadow .12s,background .12s;";
+      const badgeBase = "flex:none;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-family:var(--font-heading);font-weight:600;";
+      const a = s.answers[s.ci];
+      const rev = !!s.revealed;
+      const okNow = rev && this.isQCorrect(q, a);
+      if (base.isChoice) {
+        base.options = q.options.map((o, idx) => {
+          const sel = q.kind === "single" ? a === idx : Array.isArray(a) && a.includes(idx);
+          let border = "border:1px solid var(--color-divider);box-shadow:none;background:var(--color-surface);";
+          let badge = "border:1.5px solid var(--color-divider);background:transparent;color:var(--color-text);";
+          if (rev && o.c) {
+            border = "border:1px solid var(--color-accent);box-shadow:inset 0 0 0 1px var(--color-accent);background:var(--color-accent-100);";
+            badge = "border:1.5px solid var(--color-accent);background:var(--color-accent);color:var(--color-bg);";
+          } else if (rev && sel) {
+            border = "border:1px solid var(--color-accent-2-600);box-shadow:inset 0 0 0 1px var(--color-accent-2-600);background:var(--color-accent-2-100);";
+            badge = "border:1.5px solid var(--color-accent-2-600);background:var(--color-accent-2-600);color:var(--color-bg);";
+          } else if (!rev && sel) {
+            border = "border:1px solid var(--color-accent);box-shadow:inset 0 0 0 1px var(--color-accent);background:var(--color-accent-100);";
+            badge = "border:1.5px solid var(--color-accent);background:var(--color-accent);color:var(--color-bg);";
+          }
+          return {
+            letter: String.fromCharCode(65 + idx),
+            text: o.t,
+            style: rowBase + border + (rev ? "cursor:default;" : ""),
+            badgeStyle: badgeBase + badge,
+            onClick: rev ? (() => {}) : (q.kind === "single" ? (() => this.selectSingle(s.ci, idx)) : (() => this.toggleMulti(s.ci, idx))),
+          };
+        });
+      }
+      if (base.isMatch) {
+        base.matchRows = q.leftItems.map((li, i) => ({
+          left: li.l,
+          value: (a && a[i]) || "",
+          onChange: (e) => this.setMatch(s.ci, i, e.target.value),
+          disabled: rev,
+          options: q.rightOptions.map(r => ({ v: r, label: r })),
+        }));
+      }
+      base.revealed = rev;
+      base.feedbackLabel = okNow ? "Correct" : "Incorrect";
+      base.feedbackStyle = "display:inline-flex;align-items:center;width:fit-content;font-family:var(--font-heading);font-weight:600;font-size:11px;letter-spacing:0.06em;text-transform:uppercase;padding:4px 12px;border-radius:2px;" +
+        (okNow ? "background:var(--color-accent);color:var(--color-bg);" : "background:var(--color-accent-2-600);color:var(--color-bg);");
+      base.feedbackCardStyle = "display:flex;flex-direction:column;gap:12px;padding:20px 22px;margin-bottom:32px;background:var(--color-surface);border-radius:var(--radius-md);border-left:3px solid " +
+        (okNow ? "var(--color-accent)" : "var(--color-accent-2-600)") + ";";
+      base.showCorrectAnswer = rev && !okNow;
+      base.correctAnswerText = this.fmtCorrect(q);
+      base.hasExplanation = rev && !!q.explanation;
+      base.explanationText = q.explanation || "";
+      base.prevDisabled = s.ci === 0;
+      base.nextDisabled = !this.canProceed();
+      base.nextLabel = !rev ? "Check answer" : (s.ci >= s.work.length - 1 ? "Finish" : "Next");
+      base.onPrev = () => this.prev();
+      base.onNext = () => this.next();
+      base.onHome = () => this.goHome();
+      return base;
+    }
+
+    if (s.screen === "results") {
+      const quiz = this.quizzes[s.qi];
+      const sc = s.score;
+      base.quizTitle = quiz.kicker + " · " + quiz.title;
+      base.pctLabel = sc.pct + "%";
+      base.pctColor = sc.passed ? "var(--color-accent)" : "var(--color-accent-2-600)";
+      base.scoreText = sc.correct + " of " + sc.total + " questions correct";
+      base.passLabel = sc.passed ? "Passed" : "Failed";
+      base.passStyle = "display:inline-flex;align-items:center;width:fit-content;font-family:var(--font-heading);font-weight:600;font-size:13px;letter-spacing:0.06em;text-transform:uppercase;padding:6px 16px;border-radius:2px;" +
+        (sc.passed ? "background:var(--color-accent);color:var(--color-bg);" : "background:var(--color-accent-2-600);color:var(--color-bg);");
+      base.reviewItems = s.work.map((q, i) => {
+        const ok = this.isQCorrect(q, s.answers[i]);
+        return {
+          num: i + 1,
+          qtext: q.code ? (q.text + "\n\n" + q.code) : q.text,
+          tagLabel: ok ? "Correct" : "Incorrect",
+          tagStyle: "display:inline-flex;align-items:center;font-size:11px;letter-spacing:0.04em;text-transform:uppercase;font-family:var(--font-heading);font-weight:600;padding:3px 10px;border-radius:2px;" +
+            (ok ? "background:var(--color-accent-100);color:var(--color-accent-800);" : "background:var(--color-accent-2-100);color:var(--color-accent-2-800);"),
+          cardStyle: "padding:20px 22px;background:var(--color-surface);border-radius:var(--radius-md);border-left:3px solid " + (ok ? "var(--color-accent)" : "var(--color-accent-2-600)") + ";",
+          yourItems: this.answerItems(q, s.answers[i]),
+          correctItems: this.correctItems(q),
+          explanation: q.explanation || "",
+        };
+      });
+      base.onRetry = () => this.startQuiz(s.qi);
+      base.onHome = () => this.goHome();
+      return base;
+    }
+
+    return base;
+  }
+}
+</script>
+</body>
+</html>

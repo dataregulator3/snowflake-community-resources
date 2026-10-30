@@ -1,0 +1,69 @@
+name: SnowPro Core quiz
+
+# Validates the questions on every pull request and publishes the quiz to GitHub Pages
+# at https://dataregulator3.github.io/snowflake-community-resources/snowpro-core-quiz/
+on:
+  pull_request:
+    paths:
+      - "snowpro-core-quiz/**"
+      - ".github/workflows/snowpro-core-quiz.yml"
+  push:
+    branches: [main]
+    paths:
+      - "snowpro-core-quiz/**"
+      - ".github/workflows/snowpro-core-quiz.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: snowpro-core-quiz
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Check answer keys
+        run: node tools/validate.mjs
+      - name: Build single HTML file
+        run: node tools/build.mjs
+      - name: Upload file for download
+        uses: actions/upload-artifact@v4
+        with:
+          name: snowpro-core-quiz
+          path: snowpro-core-quiz/dist/snowflake-practice-test.html
+      # Pages publishes one site for the whole repo. If other folders get a web page later,
+      # copy them into _site here as well.
+      - name: Assemble Pages site
+        if: github.event_name != 'pull_request'
+        run: |
+          mkdir -p ../_site/snowpro-core-quiz
+          cp dist/index.html dist/snowflake-practice-test.html ../_site/snowpro-core-quiz/
+          printf '<meta http-equiv="refresh" content="0; url=snowpro-core-quiz/">' > ../_site/index.html
+      - name: Upload GitHub Pages site
+        if: github.event_name != 'pull_request'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    if: github.event_name != 'pull_request'
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

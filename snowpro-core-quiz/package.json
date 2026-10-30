@@ -1,0 +1,16 @@
+{
+  "name": "snowpro-core-practice-test",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Free offline practice test for the Snowflake SnowPro Core (COF-C03) certification",
+  "type": "module",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "validate": "node tools/validate.mjs",
+    "build": "node tools/build.mjs",
+    "build:online": "node tools/build.mjs --online",
+    "dev": "npx --yes http-server src -p 8000 -c-1 -o /index.dc.html"
+  }
+}
