@@ -9,9 +9,9 @@ Most of what you find here is linked from posts on Reddit and other community ch
 | Folder | Content |
 |---|---|
 | `snowpro-core-quiz/` | Self-contained HTML question catalog for SnowPro Core exam preparation. Open it in any browser, no setup required. |
-| `sql/` | SQL snippets and examples for Snowflake (queries, governance, performance, and more). |
-| `python/` | Python scripts and Snowpark examples. |
-| `learnings/` | Short write-ups of things I learned along the way: pitfalls, patterns, and tips. |
+| `sql/` | (planned) SQL snippets and examples for Snowflake (queries, governance, performance, and more). |
+| `python/` | (planned) Python scripts and Snowpark examples. |
+| `learnings/` | (planned) Short write-ups of things I learned along the way: pitfalls, patterns, and tips. |
 
 Folders are added as the collection grows. Each folder has its own short README explaining what it contains and how to use it.
 
