@@ -40,10 +40,6 @@ Feedback and improvements are welcome:
 
 This is a personal community project. It is not affiliated with, endorsed by, or sponsored by Snowflake Inc. or my employer. The content is provided as is, without warranty of any kind. Exam-preparation material is meant as a study aid and does not reproduce real exam questions. Always check the official [Snowflake documentation](https://docs.snowflake.com) for the latest and authoritative information.
 
-## License
-
-Released under the [MIT License](LICENSE).
-
 ## Author
 
 Maintained by Martin Lichtwark. I work in data and AI and am an active member of the Snowflake community in the DACH and Baltic Sea region.
