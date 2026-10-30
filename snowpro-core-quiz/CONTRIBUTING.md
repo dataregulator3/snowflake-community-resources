@@ -84,7 +84,7 @@ npm run dev               # opens the app at http://localhost:8000
 
 `validate` fails if, for example, a `choose:2` question has three correct answers. The same check runs automatically on every pull request.
 
-### 5. Open a pull request
+### 5. Open a pull request 
 
 Fork the repo, commit your change and open a pull request. Mention the documentation link in the description.
 
